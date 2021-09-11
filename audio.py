@@ -6,11 +6,8 @@ from datetime import datetime
 import soundfile as sf
 import os
 import numpy as np
-from time import time
+from time import time, sleep
 
-path = "/home/felipe/final_final"
-audio_t = path + "/audio_tiao"
-audio_n = path + "/audio_not"
 
 class Audio():
 
@@ -19,9 +16,7 @@ class Audio():
         self.id = self.get_id()
         self.device = sd.query_devices()[self.id]
         self.fs = int(self.device["default_samplerate"])    
-        self.last_rec = np.zeros((0))  
-        self.last_time = 0        
-        
+       
 
     def get_time(self):
 
@@ -53,32 +48,14 @@ class Audio():
         
 
     def R(self, duration=0.25):
-     
-        rec = sd.rec(int((duration * self.fs)), samplerate = self.fs, channels=1)
-        sd.wait()        
-        amplitude = rec.max() - (rec.min()) / 2
+                
+        rec = sd.rec(int((duration * self.fs)), samplerate = self.fs, channels=2, blocking=True)
+        #sd.wait()
+        #sleep(duration)
+
         return rec.max()
         
-    
-    def REC(self, duration=0.25):
-     
-        self.last_time = time()
-        rec = sd.rec(int((duration * self.fs)), samplerate = self.fs, channels=1)
-        self.last_rec = rec
         
-
-    def save_audio(self, modifier):
-
-        pic_id = self.audio_id()
-
-        if modifier == 0:
-
-            sf.write(audio_t  + "/out_" + str(pic_id) + ".wav", self.last_rec, self.fs)
-
-        else:
-
-            sf.write(audio_n + "/out_" + str(pic_id) + ".wav", self.last_rec, self.fs)
-
 
 if __name__ == "__main__":
 

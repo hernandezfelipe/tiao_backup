@@ -9,7 +9,7 @@ os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 opt = Adam(lr = 0.00001)
 
-path = "/home/felipe/backup"
+path = "/home/pi/tiao"
 
 def load_model():
 

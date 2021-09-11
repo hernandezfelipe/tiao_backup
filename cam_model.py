@@ -19,15 +19,15 @@ parser = argparse.ArgumentParser()
 parser.add_argument("a", nargs='?', default="empty")
 args = parser.parse_args()
 
-p = psutil.Process(os.getpid())
-p.nice(20)
+#p = psutil.Process(os.getpid())
+#p.nice(20)
 
-os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
+#os.environ['TF_CPP_MIN_LOG_LEVEL'] = '3'
 
 cam = cv2.VideoCapture(0)
-#cam.set(5,10)
+cam.set(cv2.CAP_PROP_FPS, 10) 
 
-path = "/home/felipe/backup"
+path = "/home/pi/tiao"
 path_tiao = path+"/tiao"
 
 min_dog = 3
@@ -48,7 +48,7 @@ WAIT_TURNS = int(60.0 / run_time)
 
 SCORE_THRESHOLD = 0.90
 
-SOUND_THRESHOLD = -0.50
+SOUND_THRESHOLD = 0.90
 #SOUND_THRESHOLD = -100
 
 pic_enabled = True
@@ -108,17 +108,17 @@ while True:
     except Exception as e:
         print(e)
         aud = Audio()
-
+    
     img, per = run_cam()
 
     if per > 75:
 
         print("Too dark")
-        #f = open(path + "/last_run.txt","w")
-        #time_id = '{:02d}'.format(now.day)+"-"+'{:02d}'.format(now.month)+"-"+str(now.year)+"-"+'{:02d}'.format(now.hour)+":"+'{:02d}'.format(now.minute)+":"+'{:02d}'.format(now.second)
-        #f.write("Closed because too dark at: " + time_id+"\n")
-        #f.close()
-        #break
+        f = open(path + "/last_run.txt","w")
+        time_id = '{:02d}'.format(now.day)+"-"+'{:02d}'.format(now.month)+"-"+str(now.year)+"-"+'{:02d}'.format(now.hour)+":"+'{:02d}'.format(now.minute)+":"+'{:02d}'.format(now.second)
+        f.write("Closed because too dark at: " + time_id+"\n")
+        f.close()
+        break
         sleep(3600)
 
 

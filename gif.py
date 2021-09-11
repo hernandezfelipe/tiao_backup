@@ -5,7 +5,7 @@ from datetime import datetime
 
 print("Criando gif")
 
-path = "/home/felipe/backup"
+path = "/home/pi/tiao"
 
 filenames = os.listdir(path + "/gif/")
 filenames.sort()
